@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bootstrap Example</title>
+<meta content="text/html" charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">	
+<link rel="stylesheet" href="css/jquery.fancybox.css">	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>   
+ <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
+  <script src="js/jquery.fancybox.js"></script>   
+   
+<style> 
+     
+ a {text-decoration: none;}    
+ ul {text-decoration: none; }
+ li { text-decoration: none; }      
+ ul { p }  
+ li {
+	text-align:center;      
+	float: right;  	
+ }  
+ a {               
+   line-height: 42px;    
+ }   
+      
+      
+ .imageAdd {   
+ 	
+ 	margin-left: 40%;         
+ 	margin-bottom: 20px;             
+ }   
+ 
+ .imagePluse {
+ margin-left: 40%;     
+ }   
+
+    
+ div.col-xs-12.col-lg-3 {   
+                           
+ margin-bottom: 30px;  
+ margin-top: 30px;
+ text-align: center;                                                                                       
+ }
+ div.col-xs-12.col-lg-3.img {
+ border: 0;  
+ 
+ }  
+ 
+ .carousel-inner > .item > img,
+ .carousel-inner > .item > a > img {
+      width: 70%;
+      margin: auto;
+ 
+  }
+  #myModal{
+  
+   margin-top: 17%;                  
+  }
+                                 
+</style>    
+<script>          
+	$(document).ready(function() {	     
+		 var imgVal = '';
+		  
+		 function selectData() { // 메인화면에 보여줄 기본 이미지 10개
+	   
+			 $('.wrap').empty();                                   
+			 $.getJSON('list', function(data) {                                                                    
+				 $(data).each(function (index, item) {                                                                       
+				      output = '<div class="col-xs-12 col-lg-3"> '  
+				      + '<a href="' + item.imgNewName + '" rel="fancybox">'  
+				      + '<img class="imgA " src=' + item.imgNewName + ' width="320" height="250" /></a></div>';                       
+					  $('.wrap').append(output);   
+					   $('a[rel="fancybox"]').fancybox({
+						   
+						   title: '<div id="wrap1">'   
+					   + '<input type="text" name="name" placeholder="이름을 입력해주세요" /><br />'
+					   + '<input type="text" name="message" placeholder="메세지를 입력해주세요" />'
+					   + '<span></span>'   
+					   + '</div>'
+					   });                        
+						 /* imgVal = $('imgA').attr('src', function(i, origValue){
+					  		  alert(origValue);         
+				     		  return origValue + '<input type="text" name="name" placeholder="이름">';         
+				   		  }); */    
+				 });        
+				
+			 });
+                       
+		 } 
+		       
+		                     	         
+        $('.imagePluse').click(function (){       // 이미지 10개 단위로 추가적으로 불러오는 부분
+        	     
+        	 $('.output').empty(); 
+        	  
+			 $.getJSON('/imageAddList', function(data) {                                                 
+				 $(data).each(function (index, item) {     
+					 if(item){            
+				      output = '<div class="col-xs-12 col-lg-3">'                    
+				     + '<img class="addImg" src= ' + item.imgNewName + ' width="320px" height="250px"></div>'                
+				     $('.wrap').append(output);
+                         
+					 } else {     
+						          
+						 $(this).off(); 
+					 }                                                                      
+				 });                                                                          
+				                                    
+			 });          
+			 $(this).off();   
+        	
+        });        
+	    $('.imageAdd').click(function () { // 이미지 업로드 form 부분     
+	    	$('.wrap').empty();
+	    	var str = ('<form method="post" action="/upload" enctype="multipart/form-data"> ' +		
+	    	'<input type="file" name ="img"><input type="submit"></form>');      
+	    	$('#data').append(str);  
+              
+	    }); 
+                                      
+	        selectData();    
+	                
+	});                   
+        
+</script>	     
+            
+</head>
+<body>           
+    <nav class="navbar navbar-default">
+  		<div class="container">             
+    		<div class="navbar-header">                         
+    		<div class="col-xs-12">                                        
+	    			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+	          			<span class="icon-bar"></span>   
+	          			<span class="icon-bar"></span>
+	        		</button>     	
+    				<a href="#">Instargram</a>	  
+    			</div>        
+    		</div>	<!-- 네비게이션헤더 끝나는 부분 -->
+    		<div class="collapse navbar-collapse navbar-ex1-collapse">                  
+    			<ul class="nav navbar-nav navbar-right">         
+          			<li><a href="#"><span class="glyphicon glyphicon-search"><input type="search" /></span> </a></li>
+          			<li><a href="#">chioyoungjin</a></li>       
+          		</ul>	
+    		</div>	
+    		
+    		<!-- 본문 정의 -->
+  	</div>        
+	</nav>               
+	<div class="contants">                  
+        <button class="imageAdd"><img class="img-circle" >
+    	<span class="glyphicon glyphicon-plus"> 이미지 추가 </span>     
+    	</img></button>    <br /> 
+    	<div class="wrap">
+            
+       </div>
+        <div style="display: none;">
+        <div id="data" style="width:400px;height:100px;overflow:auto;">
+                   Write whatever text you want right here!!
+        </div>              
+    </div> 
+    </div>              
+                                
+ 	<footer><button type="button" class="imagePluse" data-spy="affix" data-offset-bottom="10">더 읽어 들이기</button>	
+ 	</footer>   
+</body>          
+</html>  

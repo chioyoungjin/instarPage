@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bootstrap Example</title>
+<meta content="text/html" charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script>
+	
+	$(document).ready(function() {
+		
+		 function selectData() {
+			 $('.wrap').empty();       
+			 $.getJSON('list', function(data) {                             
+				 $(data).each(function (index, item) {                                
+				      output = '<div class="col-xs-12 col-lg-3"><a href="/detailsPage"><img src=' + item.imgNewName + ' width="101%" height="472" ></div>'     
+					  $('.wrap').append(output);                          
+                                                          
+				 });                                               
+				                
+			 });                 
+		 } 
+	});
+
+</script>	
+</head>
+<body>
+
+<div class="wrap"></div>
+</body>
+</html>         
